@@ -5,8 +5,7 @@
 * *Full Stack Web Developer*
 * Knoxville, TN (US eastern time)
 * colsen.sean@gmail.com
-* github.com/seancolsen
-* linkedin.com/in/sean-colsen
+* [linkedin.com/in/sean-colsen](https://www.linkedin.com/in/sean-colsen/)
 
 ## Skills
 
