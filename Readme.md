@@ -1,3 +1,5 @@
+★ __[Download as PDF](https://raw.githubusercontent.com/seancolsen/resume/main/Sean_Colsen_Resume.pdf)__ ★
+
 # Sean Colsen
 
 * *Full Stack Web Developer*
