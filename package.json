@@ -1,0 +1,14 @@
+{
+  "name": "resume",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "electron-pdf --pageSize Letter $( cd \"$(dirname \"$0\")\" ; pwd -P )/resume.html Sean_Colsen_Resume.pdf"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron-pdf": "^20.0.0"
+  }
+}

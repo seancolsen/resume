@@ -1,0 +1,339 @@
+<html>
+<head>
+<style>
+  /* Reset */
+  p { margin: 0; }
+
+  /* Typeface */
+  html { font-family: 'Baloo 2'; }
+  h1, h2 { font-family: 'Lilita One'; font-weight: normal; }
+
+  /* Font sizes */
+  html {
+    --tsx: 1.2;
+    --ts2: calc(var(--ts1) / var(--tsx));
+    --ts1: calc(var(--t0) / var(--tsx));
+    --t0: 14px;
+    --tbx: 1.5;
+    --tb1: calc(var(--t0) * var(--tbx));
+    --tb2: calc(var(--tb1) * var(--tbx));
+    font-size: var(--t0);
+  }
+  h1 { font-size: var(--tb2); }
+  h2 { font-size: var(--tb1); }
+  .top .job-title { font-size: var(--tb1); }
+  .job .skills { font-size: var(--ts1); }
+  .project .skills { font-size: var(--ts1); }
+
+  /* Spacing */
+  html {
+    line-height: 1.35;
+    --s1: 0.2rem;
+    --s2: calc(var(--s1) * 1.618);
+    --s3: calc(var(--s2) * 1.618);
+    --s4: calc(var(--s3) * 1.618);
+    --s5: calc(var(--s4) * 1.618);
+    --s6: calc(var(--s5) * 1.618);
+  }
+  body { padding-top: var(--s6); }
+  h1 { margin: var(--s4) 0; line-height: 1;}
+  h2 { margin: var(--s5) 0 var(--s4) 0; }
+  ul { padding-left: var(--s5); }
+  .top { --x-spacing: var(--s4); }
+  .top .bottom { padding-top: var(--s3); }
+  .skills-line { margin: var(--s3) 0; }
+  .skill-category + .skill-category { margin-left: var(--s5); }
+  .skill + .skill { margin-left: var(--s3); }
+  .skill-category .category-name { margin: 0 var(--s3) 0 0; }
+  /* skill top padding is a hacky fix for PDF not rendering consistently with web  */ 
+  .skill { padding: 0.2em var(--s1) 0 var(--s1); line-height: 1; }
+  .job { margin: var(--s4) 0; }
+  .job .header { margin: var(--s2) 0; }
+  .job .job-content li + li::before { margin: var(--s2);  }
+  .job .timeframe { margin-left: var(--s3); }
+  .project { margin: var(--s4) 0; }
+  .project { grid-gap: var(--s3); }
+  .education-interests { grid-gap: 0 var(--s6); }
+
+  /* Colors */
+  html {
+    --c1-0: #000;
+    --c1-1: #484848;
+    --c1-2: #6e6e6e;
+    --c1-3: #9c9c9c;
+    --c1-4: #cdcdcd;
+    --c1-5: #f0f0f0;
+  }
+  a { color: var(--c1-0); }
+  .skill { background: var(--c1-5); border: solid 1px var(--c1-4); color: var(--c1-2); }
+  .job .job-content li + li::before {  color: var(--c1-3); }
+  .job .timeframe { color: var(--c1-3); }
+
+  /* Layout */
+  .page { max-width: min-content; margin: 0 auto; }
+  .top { display: grid; grid-template: auto auto / 1fr 1.618fr; grid-auto-flow: column; align-items: baseline; }
+  .top h1 { margin: 0; }
+  .top .left { text-align: right; border-right: 1px solid var(--c1-5); padding-right: var(--x-spacing); }
+  .top .right { display: flex; flex-wrap: wrap; border-left: 1px solid var(--c1-5); padding-left: var(--x-spacing); }
+  .top .job-title { font-style: italic; }
+  .top .right p > * + * { margin-left: var(--x-spacing); }
+  .skills h2 { margin-top: 0; }
+  .skills-line { display: flex; align-items: center; }
+  .skill-category { display: flex; align-items: center; }
+  .skill-category .category-name { white-space: nowrap; }
+  .skills-list { list-style-type: none; margin: 0; padding: 0; display: flex; }
+  .skill { border-radius: var(--s1); white-space: nowrap; }
+  .job .header { display: grid; grid-template: auto / 1fr auto; }
+  .job .skills { grid-row: 1; grid-column: 4; }
+  .job .job-content { grid-row: 2; grid-column: 1 / span 4; margin: 0; list-style-type: none; }
+  .job .job-content li { display: inline; }
+  .job .job-content li + li::before { content: '◆'; }
+  .project { display: grid; grid-template: auto / auto 1fr auto; }
+  .education-interests { display: grid; grid-template: auto auto / 1fr 1fr; grid-gap: 0 var(--s6); grid-auto-flow: column; margin-top: -1rem; }
+  .education-interests > section { display: contents; }
+</style>
+<title>Sean Colsen</title>
+</head>
+
+<div class="page">
+
+<section class="top">
+  <h1 class="left">Sean Colsen</h1>
+  <div class="left bottom personal-details">
+    <p class="location">Knoxville, TN, USA (UTC&minus;4:00)</p>
+    <p class="pronouns">Pronouns: He/Him</p>
+  </div>
+  <div class="right job-title">Senior Full Stack Software Engineer</div>
+  <div class="right bottom contact-info">
+    <p>
+      <a class="github" href="https://github.com/seancolsen">github.com/seancolsen</a>
+      <a class="linkedin" href="https://linkedin.com/in/sean-colsen">linkedin.com/in/sean-colsen</a>
+    </p>
+    <p>
+      <a class="email" href="mailto:colsen.sean@gmail.com">colsen.sean@gmail.com</a>
+      <span class="phone">+1-865-548-1229</span>
+    </p>
+  </div>
+</section>
+
+<!-- Skills --------------------------------------------------------->
+
+<section class="skills">
+  <h2>Skills</h2>
+  <div id="skills-content" />
+</section>
+
+<script>
+  const skillsContent = [
+    [
+      { category: 'Languages', skills: ['TypeScript', 'JavaScript', 'Python', 'CSS', 'HTML', 'SVG', 'Rust', 'PHP', 'Ruby', 'SQL', 'Bash'], }
+    ],
+    [
+      { category: 'Front end', skills: ['Svelte', 'Vue', 'React', 'AngularJS'], },
+      { category: 'Full stack', skills: ['Sapper', 'Nuxt'], },
+      { category: 'Mobile', skills: ['Capacitor', 'PWA'], }
+    ],
+    [
+      { category: 'Back end', skills: ['Node', 'Deno', 'Django', 'Symfony'], },
+      { category: 'DB', skills: ['Postgres', 'MySQL', 'SQLite', 'Redis'], }
+    ],
+    [
+      { category: 'Testing', skills: ['Jest', 'Testing Library', 'Playwright', 'Cypress', 'Storybook', 'Pytest'], },
+      { category: 'VCS', skills: ['Git', 'GitHub', 'GitLab'], },
+    ],
+    [
+      { category: 'DevOps', skills: ['Linux', 'Apache', 'Nginx', 'Docker', 'SSH'], },
+      { category: 'CMS', skills: ['Drupal', 'Wordpress', 'Jekyll', 'MkDocs'], },
+    ],
+    [
+      { category: 'Soft', skills: ['Remote work', 'Async work', 'Open source', 'Technical writing', 'Pairing', 'Public speaking', 'Math'], },
+    ],
+  ];
+
+  function skillsList(skills) {
+    return `
+      <ul class="skills-list">
+        ${skills.map(skill => `<li class="skill">${skill}</li>`).join('')}
+      </ul>
+    `;
+  }
+
+  function skillCategory({ category, skills }) {
+    return `
+      <div class="skill-category">
+        <div class="category-name">${category}:</div>
+        ${skillsList(skills)}
+      </div>
+    `;
+  }
+
+  document.getElementById('skills-content').innerHTML = skillsContent.map(
+    lines => `<div class="skills-line">${lines.map(skillCategory).join('')}</div>`
+  ).join('');
+</script>
+
+  <!-- Experience --------------------------------------------------------->
+
+  <section>
+    <h2>Experience</h2>
+    <div id="job-content" />
+  </section>
+
+  <script>
+    const jobContent = [
+      {
+        yearStart: 2021,
+        title: 'Front End Software Engineer',
+        company: {
+          name: 'CCI',
+          url: 'https://centerofci.org/',
+        },
+        product: {
+          name: 'Mathesar',
+          url: 'https://github.com/centerofci/mathesar',
+          description: 'an open source spreadsheet/database hybrid application',
+        },
+        skills: ['Svelte', 'TypeScript', 'Python', 'Postgres'],
+        accomplishments: [
+          'Worked asynchronously within a globally distributed team of 8 engineers',
+          'Implemented complex interactive features with an eye towards performance and usability',
+          'Led the UX design process for many core features',
+          'Advised on architectural decisions and code standards',
+        ],
+      },
+      {
+        yearStart: 2021,
+        yearEnd: 2021,
+        title: 'Senior Full Stack Software Engineer',
+        company: {
+          name: 'Insurance Toolkits',
+          url: 'https://insurancetoolkits.com/',
+        },
+        product: {
+          description: 'several data-focused B2B SaaS products for insurance sales agents',
+        },
+        skills: ['Vue', 'Nuxt', 'Python', 'Postgres'],
+        accomplishments: [
+          'Converted front end from Flask+Vue to Nuxt',
+          'Led incremental migration to TypeScript',
+          'Built back end features in Django', 'Designed and implemented REST APIs',
+          'Created a custom web-scraping system to harvest publicly-available insurance data at a large scale',
+          // 'Advised on architecture and hiring decisions',
+          'Found and fixed multiple security vulnerabilities',
+          // 'Mentored junior devs',
+        ],
+      },
+      {
+        yearStart: 2016,
+        yearEnd: 2020,
+        title: 'Freelance Software Developer',
+        product: {
+          name: 'CiviCRM',
+          url: 'https://github.com/civicrm/civicrm-core',
+          description: 'an open source CRM for nonprofits',
+        },
+        // summary: 'Supported various non-profit organizations with their CiviCRM installations and customizations, including making upstream improvements to CiviCRM',
+        skills: ['AngularJS', 'PHP', 'Symfony', 'MySQL'],
+        accomplishments: [
+          'Funded my open source work by providing development, consulting, and support to freelance clients using CiviCRM',
+          // 'Contributed extensively within the global open source CiviCRM community',
+          "Built a custom static site publishing system for <a href='https://docs.civicrm.org'>docs.civicrm.org</a>, and migrated 10 years of docs content content into it",
+          'Found and fixed many upstream security vulnerabilities',
+        ],
+      },
+      {
+        yearStart: 2008,
+        yearEnd: 2016,
+        title: 'IT Manager',
+        company: {
+          name: 'Bikes Not Bombs',
+          url: 'https://bikesnotbombs.org/',
+        },
+        summary: 'Handled all tech needs for this mid-sized non-profit with over 20 staff',
+        skills: ['Drupal', 'PHP', 'MySQL', 'Ruby'],
+        accomplishments: [
+          'Built a mobile mapping application for a large annual fundraising bike ride',
+          'Migrated fundraising database to CiviCRM and developed many customizations for it',
+          'Designed and built public website',
+          // 'Helped with graphic design and brand development',
+        ],
+      },
+      {
+        yearStart: 2007,
+        yearEnd: 2008,
+        title: 'Freelance Web Developer',
+        skills: ['Drupal', 'PHP', 'Symfony'],
+        summary: 'Designed and built marketing websites for small businesses, organizations, and community groups',
+      },
+    ];
+
+    function productSummary({ name, url, description }) {
+      return `
+        Helped build ${name && url ? `<a href="${url}">${name}</a>,` : ''}
+        <span class="product-description">${description}</span>
+      `;
+    }
+
+    function jobItem({ yearStart, yearEnd, title, company, summary, product, skills, accomplishments }) {
+      return `
+        <div class="job">
+          <div class="header">
+            <div>
+              <strong class="title">${title}</strong>
+              ${company ? `<span class="company">for <a href="${company.url}">${company.name}</a></span>` : ''}
+              <span class="timeframe">${yearStart} - ${yearEnd ? `${yearEnd}` : 'now'}</span>
+            </div>
+            <div class="skills">${skillsList(skills)}</div>
+          </div>
+          <ul class="job-content">
+            ${product ? `<li>${productSummary(product)}</li>` : ''}
+            ${summary ? `<li>${summary}</li>` : ''}
+            ${accomplishments ? accomplishments.map(a => `<li>${a}</li>`).join('') : ''}
+          </ul>
+        </div>
+      `;
+    }
+
+    document.getElementById('job-content').innerHTML = jobContent.map(jobItem).join('');
+  </script>
+
+  <section>
+    <h2>Personal Projects</h2>
+    <div id="projects" />
+  </section>
+
+  <script>
+    const projects = [
+      {
+        name: 'Octave Compass',
+        repo: 'https://github.com/seancolsen/octave-compass',
+        description: 'An interactive tool for musicians to explore scales and chords',
+        skills: ['Svelte', 'TypeScript'],
+      },
+    ];
+    document.getElementById('projects').innerHTML = projects.map(({ name, repo, description, skills }) => `
+      <div class="project">
+        <div class="name"><a href="${repo}">${name}</a></div>
+        <div class="description">${description}</div>
+        <div class="skills">${skillsList(skills)}</div>
+      </div>
+    `).join('');
+  </script>
+
+  <div class="education-interests">
+    <section>
+      <h2>Education</h2>
+      <div>
+        <p>Bachelor of Science in <strong>Electrical Engineering</strong></p>
+        <p>Northeastern University, Boston (GPA 3.7/4.0)</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Interests</h2>
+      <p>Carpentry, homesteading, accordion, mountain biking, rock climbing, mechanical keyboards</p>
+    </section>
+  </div>
+
+</div>
+</html> 
