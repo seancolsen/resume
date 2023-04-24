@@ -10,11 +10,11 @@
 
   /* Font sizes */
   html {
-    --tsx: 1.2;
+    --tsx: 1.2; /** "smaller" scaling factor */
     --ts2: calc(var(--ts1) / var(--tsx));
     --ts1: calc(var(--t0) / var(--tsx));
-    --t0: 14px;
-    --tbx: 1.5;
+    --t0: 14px; /** Base text size */
+    --tbx: 1.5; /** "bigger" scaling factor */
     --tb1: calc(var(--t0) * var(--tbx));
     --tb2: calc(var(--tb1) * var(--tbx));
     font-size: var(--t0);
@@ -24,6 +24,7 @@
   .top .job-title { font-size: var(--tb1); }
   .job .skills { font-size: var(--ts1); }
   .project .skills { font-size: var(--ts1); }
+  .status { font-size: var(--ts1); }
 
   /* Spacing */
   html {
@@ -46,13 +47,16 @@
   .skill + .skill { margin-left: var(--s3); }
   .skill-category .category-name { margin: 0 var(--s3) 0 0; }
   /* skill top padding is a hacky fix for PDF not rendering consistently with web  */ 
-  .skill { padding: 0.2em var(--s1) 0 var(--s1); line-height: 1; }
+  .skill { padding: 0.2em var(--s1) 0.1em var(--s1); line-height: 1; }
   .job { margin: var(--s4) 0; }
   .job .header { margin: var(--s2) 0; }
+  .job .skills { margin: var(--s2) 0; padding: 0 0 0 var(--s5); }
+  .job .job-content { padding: 0 0 0 var(--s5); }
   .job .job-content li + li::before { margin: var(--s2);  }
   .job .timeframe { margin-left: var(--s3); }
   .project { margin: var(--s4) 0; }
   .project { grid-gap: var(--s3); }
+  .project .description { padding: 0 0 0 var(--s5); }
   .education-interests { grid-gap: 0 var(--s6); }
 
   /* Colors */
@@ -67,10 +71,11 @@
   a { color: var(--c1-0); }
   .skill { background: var(--c1-5); border: solid 1px var(--c1-4); color: var(--c1-2); }
   .job .job-content li + li::before {  color: var(--c1-3); }
-  .job .timeframe { color: var(--c1-3); }
+  .timeframe { color: var(--c1-3); }
+  .status { color: var(--c1-2); }
 
   /* Layout */
-  .page { max-width: min-content; margin: 0 auto; }
+  .page { width: 670px; margin: 0 auto; }
   .top { display: grid; grid-template: auto auto / 1fr 1.618fr; grid-auto-flow: column; align-items: baseline; }
   .top h1 { margin: 0; }
   .top .left { text-align: right; border-right: 1px solid var(--c1-5); padding-right: var(--x-spacing); }
@@ -83,12 +88,11 @@
   .skill-category .category-name { white-space: nowrap; }
   .skills-list { list-style-type: none; margin: 0; padding: 0; display: flex; }
   .skill { border-radius: var(--s1); white-space: nowrap; }
-  .job .header { display: grid; grid-template: auto / 1fr auto; }
-  .job .skills { grid-row: 1; grid-column: 4; }
-  .job .job-content { grid-row: 2; grid-column: 1 / span 4; margin: 0; list-style-type: none; }
+  .job .skills { flex: 1 0 auto; }
+  .job .job-content { margin: 0; list-style-type: none; }
   .job .job-content li { display: inline; }
   .job .job-content li + li::before { content: '🞙'; }
-  .project { display: grid; grid-template: auto / auto 1fr auto; }
+  .project .header { display: flex; gap: var(--s3); }
   .education-interests { display: grid; grid-template: auto auto / 1fr 1fr; grid-gap: 0 var(--s6); grid-auto-flow: column; margin-top: -1rem; }
   .education-interests > section { display: contents; }
 </style>
@@ -116,62 +120,6 @@
   </div>
 </section>
 
-<!-- Skills --------------------------------------------------------->
-
-<section class="skills">
-  <h2>Skills</h2>
-  <div id="skills-content" />
-</section>
-
-<script>
-  const skillsContent = [
-    [
-      { category: 'Languages', skills: ['TypeScript', 'JavaScript', 'Python', 'CSS', 'HTML', 'SVG', 'Rust', 'PHP', 'Ruby', 'SQL', 'Bash'], }
-    ],
-    [
-      { category: 'Front end', skills: ['Svelte', 'Vue', 'React', 'AngularJS'], },
-      { category: 'Full stack', skills: ['Sapper', 'Nuxt'], },
-      { category: 'Mobile', skills: ['Capacitor', 'PWA'], }
-    ],
-    [
-      { category: 'Back end', skills: ['Node', 'Deno', 'Django', 'Symfony'], },
-      { category: 'DB', skills: ['PostgreSQL', 'MySQL', 'SQLite', 'Redis'], }
-    ],
-    [
-      { category: 'Testing', skills: ['Jest', 'Testing Library', 'Playwright', 'Cypress', 'Storybook', 'Pytest'], },
-      { category: 'VCS', skills: ['Git', 'GitHub', 'GitLab'], },
-    ],
-    [
-      { category: 'DevOps', skills: ['Linux', 'Apache', 'Nginx', 'Docker', 'SSH'], },
-      { category: 'CMS', skills: ['Drupal', 'Wordpress', 'Jekyll', 'MkDocs'], },
-    ],
-    [
-      { category: 'Soft', skills: ['Remote work', 'Async work', 'Open source', 'Technical writing', 'Pairing', 'Public speaking', 'Math'], },
-    ],
-  ];
-
-  function skillsList(skills) {
-    return `
-      <ul class="skills-list">
-        ${skills.map(skill => `<li class="skill">${skill}</li>`).join('')}
-      </ul>
-    `;
-  }
-
-  function skillCategory({ category, skills }) {
-    return `
-      <div class="skill-category">
-        <div class="category-name">${category}:</div>
-        ${skillsList(skills)}
-      </div>
-    `;
-  }
-
-  document.getElementById('skills-content').innerHTML = skillsContent.map(
-    lines => `<div class="skills-line">${lines.map(skillCategory).join('')}</div>`
-  ).join('');
-</script>
-
   <!-- Experience --------------------------------------------------------->
 
   <section>
@@ -185,15 +133,24 @@
         yearStart: 2021,
         title: 'Front End Software Engineer',
         company: {
-          name: 'CCI',
-          url: 'https://centerofci.org/',
+          name: 'Mathesar',
+          url: 'https://mathesar.org/',
         },
         product: {
           name: 'Mathesar',
           url: 'https://github.com/centerofci/mathesar',
           description: 'an open source spreadsheet/database hybrid application',
         },
-        skills: ['Svelte', 'TypeScript', 'Python', 'PostgreSQL'],
+        skills: [
+          'Svelte',
+          'TypeScript',
+          'Python',
+          'PostgreSQL',
+          'Docker',
+          'Jest',
+          'Storybook',
+          'Playwright',
+        ],
         accomplishments: [
           'Worked asynchronously within a globally distributed team of 8 engineers',
           'Implemented complex interactive features with an eye towards performance and usability',
@@ -212,7 +169,18 @@
         product: {
           description: 'several data-focused B2B SaaS products for insurance sales agents',
         },
-        skills: ['Vue', 'Nuxt', 'Python', 'PostgreSQL'],
+        skills: [
+          'Vue',
+          'Nuxt',
+          'TypeScript',
+          'Python',
+          'mypy',
+          'Django',
+          'Flask',
+          'PostgreSQL',
+          // 'Redis',
+          'Selenium',
+        ],
         accomplishments: [
           'Converted front end from Flask+Vue to Nuxt',
           'Led incremental migration to TypeScript',
@@ -233,7 +201,16 @@
           description: 'an open source CRM for nonprofits',
         },
         // summary: 'Supported various non-profit organizations with their CiviCRM installations and customizations, including making upstream improvements to CiviCRM',
-        skills: ['AngularJS', 'PHP', 'Symfony', 'MySQL'],
+        skills: [
+          'PHP',
+          'AngularJS',
+          'Javascript',
+          'Symfony',
+          'MySQL',
+          'React',
+          'Bootstrap',
+          'MkDocs',
+        ],
         accomplishments: [
           'Funded my open source work by providing development, consulting, and support to freelance clients using CiviCRM',
           // 'Contributed extensively within the global open source CiviCRM community',
@@ -250,7 +227,7 @@
           url: 'https://bikesnotbombs.org/',
         },
         summary: 'Handled all tech needs for this mid-sized non-profit with over 20 staff',
-        skills: ['Drupal', 'PHP', 'MySQL', 'Ruby'],
+        skills: ['Drupal', 'PHP', 'Javascript', 'MySQL', 'SQL', 'Ruby', 'Bash', 'Linux', 'Nginx'],
         accomplishments: [
           'Built a mobile mapping application for a large annual fundraising bike ride',
           'Migrated fundraising database to CiviCRM and developed many customizations for it',
@@ -262,7 +239,7 @@
         yearStart: 2007,
         yearEnd: 2008,
         title: 'Freelance Web Developer',
-        skills: ['Drupal', 'PHP', 'Symfony'],
+        skills: ['Wordpress', 'Drupal', 'PHP', 'Symfony', 'HTML', 'CSS'],
         summary: 'Designed and built marketing websites for small businesses, organizations, and community groups',
       },
     ];
@@ -271,6 +248,14 @@
       return `
         Helped build ${name && url ? `<a href="${url}">${name}</a>,` : ''}
         <span class="product-description">${description}</span>
+      `;
+    }
+
+    function skillsList(skills) {
+      return `
+        <ul class="skills-list">
+          ${skills.map(skill => `<li class="skill">${skill}</li>`).join('')}
+        </ul>
       `;
     }
 
@@ -283,8 +268,8 @@
               ${company ? `<span class="company">for <a href="${company.url}">${company.name}</a></span>` : ''}
               <span class="timeframe">${yearStart} - ${yearEnd ? `${yearEnd}` : 'now'}</span>
             </div>
-            <div class="skills">${skillsList(skills)}</div>
           </div>
+          <div class="skills">${skillsList(skills)}</div>
           <ul class="job-content">
             ${product ? `<li>${productSummary(product)}</li>` : ''}
             ${summary ? `<li>${summary}</li>` : ''}
@@ -305,17 +290,30 @@
   <script>
     const projects = [
       {
+        name: 'Querydown',
+        year: 2023,
+        repo: 'https://github.com/seancolsen/querydown',
+        status: '(very early stage)',
+        description: 'An expressive DSL for easily writing relational database queries which compile to SQL',
+        skills: ['Rust', 'SQL'],
+      },
+      {
         name: 'Octave Compass',
+        year: 2020,
         repo: 'https://github.com/seancolsen/octave-compass',
-        description: 'An interactive tool for musicians to explore scales and chords',
-        skills: ['Svelte', 'TypeScript'],
+        description: 'An interactive tool for musicians to explore scales and the chords that they contain',
+        skills: ['Svelte', 'TypeScript', 'SVG'],
       },
     ];
-    document.getElementById('projects').innerHTML = projects.map(({ name, repo, description, skills }) => `
+    document.getElementById('projects').innerHTML = projects.map(({ name, repo, description, skills, year, status }) => `
       <div class="project">
-        <div class="name"><a href="${repo}">${name}</a></div>
+        <div class="header">
+          <div class="name"><a href="${repo}">${name}</a></div>
+          <div class="timeframe">${year}</div>
+          ${status ? `<div class="status">${status}</div>` : ''}
+          <div class="skills">${skillsList(skills)}</div>
+        </div>
         <div class="description">${description}</div>
-        <div class="skills">${skillsList(skills)}</div>
       </div>
     `).join('');
   </script>
@@ -331,7 +329,14 @@
 
     <section>
       <h2>Interests</h2>
-      <p>Carpentry, homesteading, accordion, mountain biking, rock climbing, mechanical keyboards</p>
+      <p>
+        Mountain biking,
+        rock climbing,
+        carpentry,
+        mechanical keyboards,
+        accordion
+        <!-- homesteading, -->
+      </p>
     </section>
   </div>
 
