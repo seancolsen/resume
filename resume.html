@@ -25,6 +25,7 @@
   .job .skills { font-size: var(--ts1); }
   .project .skills { font-size: var(--ts1); }
   .status { font-size: var(--ts1); }
+  .pronouns { font-size: var(--ts1); }
 
   /* Spacing */
   html {
@@ -73,6 +74,7 @@
   .job .job-content li + li::before {  color: var(--c1-3); }
   .timeframe { color: var(--c1-3); }
   .status { color: var(--c1-2); }
+  .pronouns { color: var(--c1-3); }
 
   /* Layout */
   .page { width: 670px; margin: 0 auto; }
@@ -305,7 +307,7 @@
         year: 2020,
         repo: 'https://github.com/seancolsen/octave-compass',
         description: 'An interactive tool for musicians to explore scales and the chords that they contain',
-        skills: ['Svelte', 'TypeScript', 'SVG'],
+        skills: ['Svelte', 'TypeScript', 'SVG', 'PWA'],
       },
     ];
     document.getElementById('projects').innerHTML = projects.map(({ name, repo, description, skills, year, status }) => `
@@ -335,9 +337,10 @@
       <p>
         Mountain biking,
         rock climbing,
-        carpentry,
         mechanical keyboards,
-        accordion
+        carpentry,
+        accordion,
+        cooperative living
         <!-- homesteading, -->
       </p>
     </section>
