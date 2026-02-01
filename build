@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+chromium \
+  --headless=new \
+  --disable-gpu \
+  --print-to-pdf="Sean_Colsen_Resume.pdf" \
+  --no-pdf-header-footer \
+  file://$( cd "$(dirname "$0")" ; pwd -P )/resume.html
+
