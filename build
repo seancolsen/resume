@@ -1,9 +1,42 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-chromium \
-  --headless=new \
-  --disable-gpu \
-  --print-to-pdf="Sean_Colsen_Resume.pdf" \
-  --no-pdf-header-footer \
-  file://$( cd "$(dirname "$0")" ; pwd -P )/resume.html
+WATCH=false
 
+if [[ "${1:-}" == "--watch" ]]; then
+  WATCH=true
+fi
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd -P)"
+HTML_FILE="$SCRIPT_DIR/resume.html"
+PDF_FILE="$SCRIPT_DIR/Sean_Colsen_Resume.pdf"
+
+build_pdf() {
+  echo "Building PDF..."
+  chromium \
+    --headless=new \
+    --disable-gpu \
+    --print-to-pdf="$PDF_FILE" \
+    --no-pdf-header-footer \
+    "file://$HTML_FILE"
+  echo "Done."
+}
+
+# One-shot build
+build_pdf
+
+# Watch mode
+if [[ "$WATCH" == true ]]; then
+  if ! command -v inotifywait >/dev/null 2>&1; then
+    echo "Error: inotifywait is required for --watch mode"
+    echo "Install it with: sudo apt install inotify-tools"
+    exit 1
+  fi
+
+  echo "Watching $HTML_FILE for changes..."
+  while inotifywait -e close_write,move,create "$HTML_FILE"; do
+    # Small debounce to avoid double builds
+    sleep 0.1
+    build_pdf
+  done
+fi
